@@ -7,7 +7,7 @@ PULSE pulse;
 #include <avr/power.h>
 #endif
 
-#define PIN 3     // Aaron - I changed this PIN from 6 to 3. Digital pin 3 is attached to Digital port D3 on PRIZM.
+#define PIN 5     // changed from 3 to 4 to use with old shield that doesn't have D3
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
@@ -30,14 +30,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(30, PIN, NEO_GRB + NEO_KHZ800); // I
 
 void setup() {
 
-  pulse.PulseBegin();
-  
-  // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
-  #if defined (__AVR_ATtiny85__)
-    if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
-  #endif
-  // End of trinket special code
-
+  // pulse.PulseBegin();  // comment out to skip the green button press requirement
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
@@ -50,13 +43,14 @@ void loop() {
   colorWipe(strip.Color(0, 0, 255), 50); // Blue
 //colorWipe(strip.Color(0, 0, 0, 255), 50); // White RGBW
   // Send a theater pixel chase in...
-  theaterChase(strip.Color(127, 127, 127), 50); // White
-  theaterChase(strip.Color(127, 0, 0), 50); // Red
-  theaterChase(strip.Color(0, 0, 127), 50); // Blue
+  // theaterChase(strip.Color(127, 127, 127), 50); // White
+  // theaterChase(strip.Color(127, 0, 0), 50); // Red
+  // theaterChase(strip.Color(0, 0, 127), 50); // Blue
+    theaterChase(Wheel(9), 200); // BB8 Orange, per https://www.colourlovers.com/color/E78518/BB8_Orange is 231,133,24
 
   rainbow(20);
   rainbowCycle(20);
-  theaterChaseRainbow(50);
+  // theaterChaseRainbow(50);
 }
 
 // Fill the dots one after the other with a color
